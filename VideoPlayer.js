@@ -12,6 +12,7 @@ import {
   Image,
   View,
   Text,
+  Platform,
 } from 'react-native';
 import padStart from 'lodash/padStart';
 
@@ -1063,7 +1064,7 @@ export default class VideoPlayer extends Component {
         {...this.player.seekPanResponder.panHandlers}>
         <View
           style={styles.seekbar.track}
-          onLayout={event =>
+          onLayout={(event) =>
             (this.player.seekerWidth = event.nativeEvent.layout.width)
           }
           pointerEvents={'none'}>
@@ -1193,12 +1194,13 @@ export default class VideoPlayer extends Component {
         <View style={[styles.player.container, this.styles.containerStyle]}>
           <Video
             {...this.props}
-            ref={videoPlayer => (this.player.ref = videoPlayer)}
+            ref={(videoPlayer) => (this.player.ref = videoPlayer)}
             resizeMode={this.state.resizeMode}
             volume={this.state.volume}
             paused={this.state.paused}
             muted={this.state.muted}
             rate={this.state.rate}
+            controls={Platform.OS === 'ios'}
             onLoadStart={this.events.onLoadStart}
             onProgress={this.events.onProgress}
             onError={this.events.onError}
@@ -1210,8 +1212,8 @@ export default class VideoPlayer extends Component {
           />
           {this.renderError()}
           {this.renderLoader()}
-          {this.renderTopControls()}
-          {this.renderBottomControls()}
+          {Platform.OS === 'android' && this.renderTopControls()}
+          {Platform.OS === 'android' && this.renderBottomControls()}
         </View>
       </TouchableWithoutFeedback>
     );
