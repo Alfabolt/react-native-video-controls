@@ -1189,6 +1189,11 @@ export default class VideoPlayer extends Component {
   render() {
     return (
       <TouchableWithoutFeedback
+        onLongPress={() => {
+          if (this.props.onLongPress) {
+            this.props.onLongPress();
+          }
+        }}
         onPress={this.events.onScreenTouch}
         style={[styles.player.container, this.styles.containerStyle]}>
         <View style={[styles.player.container, this.styles.containerStyle]}>
